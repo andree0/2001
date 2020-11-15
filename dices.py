@@ -3,6 +3,7 @@ from random import randint as r
 
 POSSIBLE_DICES = [3, 4, 6, 8, 10, 12, 20, 100]
 CODE = r'^(\d*)D(\d+)([+|-]\d+)*$'
+DICE_CODE = r'^D(\d+)$'
 
 
 def roll_the_dice(dice_code):
@@ -35,6 +36,26 @@ def roll_the_dice(dice_code):
             return "This dice does not exist"
     else:
         return "Wrong input"
+
+
+def choose_dice(dice_code):
+    """
+    This function check input and return result of roll the dice.
+    Input must match the pattern 'Dy',
+    otherwise a message will be displayed.
+    """
+    check_code = re.search(DICE_CODE, dice_code)
+    if check_code:
+        dice = int(check_code.group(1))
+        roll_result = 0
+        if dice in POSSIBLE_DICES:
+            roll_result += r(1, dice)
+
+            return roll_result
+        else:
+            return False
+    else:
+        return None
 
 
 if __name__ == '__main__':
