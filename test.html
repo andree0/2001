@@ -7,8 +7,10 @@
 <body>
 <h1>Start game</h1>
     <form action="" method="POST">
-        <input type="hidden" name="user_min" value={}>
-        <input type="hidden" name="user_max" value={}>
+        <label>
+        <input type="hidden" name="gamer_1" value={}>
+        <input type="hidden" name="gamer_2" value={}>
+        </label>
         <label for="dice_1">Choose the first dice:</label>
         <select name="dice_1" id="dice_1">
             <option value="D3">D3</option>
@@ -31,7 +33,10 @@
             <option value="D20">D20</option>
             <option value="D100">D100</option>
         </select>
-        <input type="submit" value="roll the dices">
+        <input type="submit" value="roll the dices" id="submit">
+        <table id="tab" >
+            <tr>{}</tr><tr>{}</tr>
+        </table>
     </form>
 </body>
 </html>
