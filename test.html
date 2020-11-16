@@ -11,6 +11,7 @@
         <input type="hidden" name="gamer_1" value={}>
         <input type="hidden" name="gamer_2" value={}>
         </label>
+        <p>
         <label for="dice_1">Choose the first dice:</label>
         <select name="dice_1" id="dice_1">
             <option value="D3">D3</option>
@@ -22,7 +23,9 @@
             <option value="D20">D20</option>
             <option value="D100">D100</option>
         </select>
-        <label for="dice_2">Choose the second dice:</label>
+        </p>
+        <p>
+            <label for="dice_2">Choose the second dice:</label>
         <select name="dice_2" id="dice_2">
             <option value="D3">D3</option>
             <option value="D4">D4</option>
@@ -33,9 +36,13 @@
             <option value="D20">D20</option>
             <option value="D100">D100</option>
         </select>
-        <input type="submit" value="roll the dices" id="submit">
-        <table id="tab" >
-            <tr>{}</tr><tr>{}</tr>
+        </p>
+        <input type="submit" value="roll the dices">
+        <p>RESULT</p>
+        <table>
+            <tr>
+                <td>{}</td><td>{}</td>
+            </tr>
         </table>
     </form>
 </body>

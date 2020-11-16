@@ -20,7 +20,8 @@ HTML_START = '''
         <label>
         <input type="hidden" name="gamer_1" value={}>
         <input type="hidden" name="gamer_2" value={}>
-        </label>        
+        </label>
+        <p>
         <label for="dice_1">Choose the first dice:</label>
         <select name="dice_1" id="dice_1">
             <option value="D3">D3</option>
@@ -32,7 +33,9 @@ HTML_START = '''
             <option value="D20">D20</option>
             <option value="D100">D100</option>
         </select>
-        <label for="dice_2">Choose the second dice:</label>
+        </p>
+        <p>
+            <label for="dice_2">Choose the second dice:</label>
         <select name="dice_2" id="dice_2">
             <option value="D3">D3</option>
             <option value="D4">D4</option>
@@ -43,8 +46,15 @@ HTML_START = '''
             <option value="D20">D20</option>
             <option value="D100">D100</option>
         </select>
+        </p>
         <input type="submit" value="roll the dices">
-        <table
+        <p></p>
+        <table>
+        <caption>RESULT</caption>
+            <tr>
+                <td>{}</td><td>{}</td>
+            </tr>
+        </table>
     </form>
 </body>
 </html>
@@ -63,7 +73,8 @@ HTML = '''
         <label>
         <input type="hidden" name="gamer_1" value={}>
         <input type="hidden" name="gamer_2" value={}>
-        </label>   
+        </label>
+        <p>
         <label for="dice_1">Choose the first dice:</label>
         <select name="dice_1" id="dice_1">
             <option value="D3">D3</option>
@@ -74,8 +85,10 @@ HTML = '''
             <option value="D12">D12</option>
             <option value="D20">D20</option>
             <option value="D100">D100</option>
-        </select> \n
-        <label for="dice_2">Choose the second dice:</label>
+        </select>
+        </p>
+        <p>
+            <label for="dice_2">Choose the second dice:</label>
         <select name="dice_2" id="dice_2">
             <option value="D3">D3</option>
             <option value="D4">D4</option>
@@ -86,8 +99,15 @@ HTML = '''
             <option value="D20">D20</option>
             <option value="D100">D100</option>
         </select>
+        </p>
         <input type="submit" value="roll the dices">
-        
+        <p></p>
+        <table>
+        <caption>RESULT</caption>
+            <tr>
+                <td>{}</td><td>{}</td>
+            </tr>
+        </table>
     </form>
 </body>
 </html>
@@ -102,8 +122,14 @@ HTML_WIN = '''
 </head>
 <body>
 <h1> {} </h1>
-<h2> Result </h2>
-<p> {} : {} </p>
+<p>        
+<table>
+<caption>RESULT</caption>
+    <tr>
+        <td>{}</td><td>{}</td>
+    </tr>
+</table>
+</p>
 <input type="submit" name="try_again" value="Try again">
 </body>
 </html>
@@ -116,10 +142,11 @@ def game_2001():
     THE 2001 GAME
     """
     if request.method == 'GET':
-        return HTML_START.format(0, 0)
+        return HTML_START.format(0, 0, 0, 0)
     else:
         gamer_1 = int(request.form["gamer_1"])
         gamer_2 = int(request.form["gamer_2"])
+
         if gamer_1 == 0 and gamer_2 == 0:
             first_roll_gamer_1 = int(cd(request.form["dice_1"]))
             second_roll_gamer_1 = int(cd(request.form["dice_2"]))
@@ -131,10 +158,8 @@ def game_2001():
 
             gamer_2 += first_roll_gamer_2 + second_roll_gamer_2
 
-            return HTML.format(gamer_1, gamer_2)
+            return HTML.format(gamer_1, gamer_2, gamer_1, gamer_2)
 
-        elif request.form["try_again"]:
-            return HTML_START.format(0, 0)
         elif gamer_1 > 2001 or gamer_2 > 2001:
             if gamer_1 > gamer_2:
                 return HTML_WIN.format("Congratulation, You win !", gamer_1, gamer_2)
@@ -165,7 +190,7 @@ def game_2001():
             else:
                 gamer_2 += roll_gamer_1
 
-            return HTML.format(gamer_1, gamer_2)
+            return HTML.format(gamer_1, gamer_2, gamer_1, gamer_2)
 
 
 if __name__ == "__main__":
