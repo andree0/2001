@@ -1,6 +1,9 @@
 import re
 from random import randint as r
+from flask import request
+from random import choice as c
 
+DICES_TO_CHOOSE = ['D3', 'D4', 'D6', 'D8', 'D10', 'D12', 'D20', 'D100']
 POSSIBLE_DICES = [3, 4, 6, 8, 10, 12, 20, 100]
 CODE = r'^(\d*)D(\d+)([+|-]\d+)*$'
 DICE_CODE = r'^D(\d+)$'
@@ -56,6 +59,32 @@ def choose_dice(dice_code):
             return False
     else:
         return None
+
+
+def user_roll(a, b):
+    third_roll_gamer_1 = int(choose_dice(request.form[a]))
+    fourth_roll_gamer_1 = int(choose_dice(request.form[b]))
+
+    roll_gamer_1 = third_roll_gamer_1 + fourth_roll_gamer_1
+    return roll_gamer_1
+
+
+def computer_roll():
+    first_roll_gamer_2 = int(choose_dice(c(DICES_TO_CHOOSE)))
+    second_roll_gamer_2 = int(choose_dice(c(DICES_TO_CHOOSE)))
+
+    gamer_2 = first_roll_gamer_2 + second_roll_gamer_2
+    return gamer_2
+
+
+def modifier_points(roll, result):
+    if roll == 7:
+        result //= 7
+    elif roll == 11:
+        result *= 11
+    else:
+        result += roll
+    return result
 
 
 if __name__ == '__main__':

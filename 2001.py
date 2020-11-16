@@ -1,7 +1,8 @@
-from random import choice as c
-from dices import choose_dice as cd
 from flask import Flask
 from flask import request
+from dices import user_roll as ur
+from dices import computer_roll as cr
+from dices import modifier_points as mp
 
 app = Flask(__name__)
 
@@ -155,45 +156,13 @@ def game_2001():
     else:
         gamer_1 = int(request.form["gamer_1"])
         gamer_2 = int(request.form["gamer_2"])
-
         if gamer_1 == 0 and gamer_2 == 0:
-            first_roll_gamer_1 = int(cd(request.form["dice_1"]))
-            second_roll_gamer_1 = int(cd(request.form["dice_2"]))
-
-            gamer_1 += first_roll_gamer_1 + second_roll_gamer_1
-
-            first_roll_gamer_2 = int(cd(c(DICES_TO_CHOOSE)))
-            second_roll_gamer_2 = int(cd(c(DICES_TO_CHOOSE)))
-
-            gamer_2 += first_roll_gamer_2 + second_roll_gamer_2
-
+            gamer_1 += ur("dice_1", "dice_2")
+            gamer_2 += cr()
             return HTML.format(gamer_1, gamer_2, gamer_1, gamer_2)
-
         else:
-            third_roll_gamer_1 = int(cd(request.form["dice_1"]))
-            fourth_roll_gamer_1 = int(cd(request.form["dice_2"]))
-
-            roll_gamer_1 = third_roll_gamer_1 + fourth_roll_gamer_1
-
-            third_roll_gamer_2 = int(cd(c(DICES_TO_CHOOSE)))
-            fourth_roll_gamer_2 = int(cd(c(DICES_TO_CHOOSE)))
-
-            roll_gamer_2 = third_roll_gamer_2 + fourth_roll_gamer_2
-
-            if roll_gamer_1 == 7:
-                gamer_1 //= 7
-            elif roll_gamer_1 == 11:
-                gamer_1 *= 11
-            else:
-                gamer_1 += roll_gamer_1
-
-            if roll_gamer_2 == 7:
-                gamer_2 //= 7
-            elif roll_gamer_2 == 11:
-                gamer_2 *= 11
-            else:
-                gamer_2 += roll_gamer_1
-
+            gamer_1 = mp(ur("dice_1", "dice_2"), gamer_1)
+            gamer_2 = mp(cr(), gamer_2)
             if gamer_1 > 2001 or gamer_2 > 2001:
                 if gamer_1 > gamer_2:
                     return HTML_WIN.format("Congratulation, You win !", gamer_1, gamer_2)
