@@ -52,6 +52,9 @@ HTML_START = '''
         <table>
         <caption>RESULT</caption>
             <tr>
+                <td>You</td><td>Computer</td>
+            </tr>
+            <tr>
                 <td>{}</td><td>{}</td>
             </tr>
         </table>
@@ -104,6 +107,9 @@ HTML = '''
         <p></p>
         <table>
         <caption>RESULT</caption>
+             <tr>
+                <td>You</td><td>Computer</td>
+            </tr>                 
             <tr>
                 <td>{}</td><td>{}</td>
             </tr>
@@ -125,6 +131,9 @@ HTML_WIN = '''
 <p>        
 <table>
 <caption>RESULT</caption>
+    <tr>
+        <td>You</td><td>Computer</td>
+    </tr>    
     <tr>
         <td>{}</td><td>{}</td>
     </tr>
@@ -160,11 +169,6 @@ def game_2001():
 
             return HTML.format(gamer_1, gamer_2, gamer_1, gamer_2)
 
-        elif gamer_1 > 2001 or gamer_2 > 2001:
-            if gamer_1 > gamer_2:
-                return HTML_WIN.format("Congratulation, You win !", gamer_1, gamer_2)
-            else:
-                return HTML_WIN.format("Sorry, You lose :(", gamer_1, gamer_2)
         else:
             third_roll_gamer_1 = int(cd(request.form["dice_1"]))
             fourth_roll_gamer_1 = int(cd(request.form["dice_2"]))
@@ -190,7 +194,13 @@ def game_2001():
             else:
                 gamer_2 += roll_gamer_1
 
-            return HTML.format(gamer_1, gamer_2, gamer_1, gamer_2)
+            if gamer_1 > 2001 or gamer_2 > 2001:
+                if gamer_1 > gamer_2:
+                    return HTML_WIN.format("Congratulation, You win !", gamer_1, gamer_2)
+                else:
+                    return HTML_WIN.format("Sorry, You lose :(", gamer_1, gamer_2)
+            else:
+                return HTML.format(gamer_1, gamer_2, gamer_1, gamer_2)
 
 
 if __name__ == "__main__":
